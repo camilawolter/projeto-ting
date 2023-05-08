@@ -1,4 +1,4 @@
-def exists_word(word, instance):
+def exists_word(word, instance, contains_info=False):
     files_with_word = []
 
     for index in range(len(instance)):
@@ -6,11 +6,13 @@ def exists_word(word, instance):
         lines_word = []
         line_number = 0
 
-        for line in file["linhas_do_arquivo"]:
+        for file_line in file["linhas_do_arquivo"]:
             line_number += 1
 
-            if word.lower() in line.lower():
-                lines_word.append({"linha": line_number})
+            if word.lower() in file_line.lower():
+                line_dict = {"linha": line_number, "conteudo": file_line
+                             } if contains_info else {"linha": line_number}
+                lines_word.append(line_dict)
 
         if lines_word:
             data = {
@@ -24,4 +26,4 @@ def exists_word(word, instance):
 
 
 def search_by_word(word, instance):
-    """Aqui irá sua implementação"""
+    return exists_word(word, instance, True)
